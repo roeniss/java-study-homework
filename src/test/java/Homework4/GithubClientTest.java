@@ -2,7 +2,6 @@ package Homework4;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHIssue;
 
 import java.util.List;
@@ -36,7 +35,7 @@ class GithubClientTest {
   void getIssues_failWhenNoExistentRepo() {
     String repoName = "roeniss/no-existent-repo";
 
-    assertThrows(GHFileNotFoundException.class, () -> this.dashboard.getIssues(repoName));
+    assertThrows(RuntimeException.class, () -> this.dashboard.getIssues(repoName));
   }
 
   @Test
