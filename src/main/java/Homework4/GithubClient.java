@@ -11,7 +11,7 @@ public class GithubClient {
   public GithubClient(String token) {
     try {
       GitHubBuilder builder = new GitHubBuilder();
-      github = builder.withOAuthToken(token).build();
+      this.github = builder.withOAuthToken(token).build();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -19,7 +19,7 @@ public class GithubClient {
 
   public List<GHIssue> getIssues(String repoName) {
     try {
-      GHRepository repo = github.getRepository(repoName);
+      GHRepository repo = this.github.getRepository(repoName);
       return repo.getIssues(GHIssueState.ALL);
     } catch (IOException e) {
       e.printStackTrace();
@@ -53,9 +53,10 @@ public class GithubClient {
   }
 
   public void showStatistics(Map<String, List<GHIssue>> participatePerUser) {
+    System.out.println("[참여 현황 (전체 18개 과제 중 수행률]");
     for (Map.Entry<String, List<GHIssue>> nameIssues : participatePerUser.entrySet()) {
       System.out.println(
-          "User '" + nameIssues.getKey() + "' : " + nameIssues.getValue().size() + "회 참여");
+          "User '" + nameIssues.getKey() + "' : " + nameIssues.getValue().size() / 18 + "%");
     }
   }
 }
