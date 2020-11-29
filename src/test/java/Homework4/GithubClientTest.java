@@ -2,6 +2,7 @@ package Homework4;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHIssue;
 
 import java.util.List;
@@ -35,7 +36,7 @@ class GithubClientTest {
   void getIssues_failWhenNoExistentRepo() {
     String repoName = "roeniss/no-existent-repo";
 
-    assertThrows(RuntimeException.class, () -> this.dashboard.getIssues(repoName));
+    assertThrows(GHFileNotFoundException.class, () -> this.dashboard.getIssues(repoName));
   }
 
   @Test
@@ -44,7 +45,6 @@ class GithubClientTest {
     List<GHIssue> issues = this.dashboard.getIssues(repoName);
     Map<String, List<GHIssue>> comments = this.dashboard.getComments(issues);
     for (Map.Entry<String, List<GHIssue>> userWithIssues : comments.entrySet()) {
-      String user = userWithIssues.getKey();
       List<GHIssue> issueUserCommentedOn = userWithIssues.getValue();
       assertTrue(issues.containsAll(issueUserCommentedOn));
       assertThat(
